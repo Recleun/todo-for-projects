@@ -1,5 +1,5 @@
 import click
-import database.main as database
+import data.main as data
 
 @click.group()
 def cli():
@@ -7,6 +7,6 @@ def cli():
 
 @click.command(name='list', help='Lists current projects.')
 def lst():
-	database.connect()
+	data.lst()
 
 cli.add_command(lst)

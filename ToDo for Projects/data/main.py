@@ -30,8 +30,7 @@ def save(toSave):
 
 def lst():
 	data = load()['projects']
-	click.echo('\n')
-	click.echo(f'Projects ({len(data)}):')
+	click.echo(f'\n Projects ({len(data)}):')
 	if len(data) > 0:
 		for i in data:
 			click.echo(' - {}'.format(i['name']))
@@ -66,5 +65,29 @@ def remove(name):
 	else:
 		click.echo('\n [FAILED] Project not found')
 
-def set(name, type, new):
-	pass
+def set(project, type, new):
+	data = load()
+	projs = data['projects']
+	index = 0
+	success = False
+	for proj in projs:
+		if proj['name'] == project:
+			if type == 'desc':
+				projs[index]['description'] = new
+				save(projs)
+				success = True
+				click.echo('\n [SUCCESS] Updated')
+			elif type == 'name':
+				projs[index]['name'] = new
+				save(projs)
+				success = True
+				click.echo('\n [SUCCESS] Updated')
+			else:
+				click.echo('\n [FAILED] Type specified is unknown')
+				return
+		index += 1
+	if success:
+		pass
+	else:
+		click.echo('\n [FAILED] Project not found')
+

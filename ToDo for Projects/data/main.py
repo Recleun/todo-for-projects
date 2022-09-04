@@ -54,8 +54,7 @@ def getProject(projectName):
 	if not success:
 		return 'not found'
 
-
-def create(desc, name):
+def projectAdd(desc, name):
 	data = load()
 	projects = data['projects']
 	check = getProject(name)
@@ -66,7 +65,7 @@ def create(desc, name):
 	else:
 		click.echo('\n [FAILED] A project with the same name already exists.')
 
-def remove(name):
+def projectRemove(name):
 	index = getProject(name)
 	if index != 'not found':
 		data = load()
@@ -99,14 +98,37 @@ def show(name):
 		data = load()
 		projectName = data['projects'][index]['name']
 		projectDesc = data['projects'][index]['description']
+		if projectDesc == '':
+			projectDesc = 'No Description Set'
 		projectTasks = data['projects'][index]['tasks']
-		click.echo(f'\nNAME: {projectName}')
-		click.echo(f'DESCRIPTION: {projectDesc}')
-		click.echo(f'TASKS ({len(projectTasks)}):')
+		click.echo(f'\n PROJECT NAME: {projectName}')
+		click.echo(f' DESCRIPTION: {projectDesc}')
+		click.echo(f' TASKS ({len(projectTasks)}):\n')
 		if len(projectTasks) > 0:
-			for i in projectTasks:
-				click.echo(f' - {i}')
+			for i in range(len(projectTasks)):
+				click.echo(f'    {i+1} - {projectTasks[i]}')
 		else:
 			click.echo(' - No tasks found')
+	else:
+		click.echo('\n [FAILED] Project not found')
+
+def taskAdd(project, task):
+	projectIndex = getProject(project)
+	if projectIndex != 'not found':
+		data = load()
+		data['projects'][projectIndex]['tasks'].append(task)
+		save(data['projects'])
+		click.echo('\n [SUCCESS] Task added successfully')
+	else:
+		click.echo('\n [FAILED] Project not found')
+
+
+def taskRemove(project, id):
+	projectIndex = getProject(project)
+	if projectIndex != 'not found':
+		data = load()
+		data['projects'][projectIndex]['tasks'].pop(id-1)
+		save(data['projects'])
+		click.echo('\n [SUCCESS] Task finished successfully')
 	else:
 		click.echo('\n [FAILED] Project not found')

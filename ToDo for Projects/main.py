@@ -26,3 +26,8 @@ def remove(name):
 @click.argument('new')
 def set(project, type, new):
 	data.set(project, type, new)
+
+@cli.command(name='show', help='Shows information and tasks of a project')
+@click.argument('name')
+def show(name):
+	data.show(name)

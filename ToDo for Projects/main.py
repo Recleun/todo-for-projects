@@ -1,5 +1,6 @@
 import click
 import data.main as data
+import utils.main as utils
 
 @click.group()
 def cli():
@@ -9,18 +10,18 @@ def cli():
 def lst():
 	data.lst()
 
-@cli.command(name='create', help='Creates a new project.')
-@click.option('--desc', default='', help='Description of the project.')
+@cli.command(name='projectadd', help='Creates a new project.')
+@click.option('--desc', help='Description of the project.')
 @click.argument('name')
-def create(desc, name):
-	data.create(desc, name)
+def projectAdd(desc, name):
+	data.projectAdd(desc, name)
 
-@cli.command(name='remove', help='Removes a project')
+@cli.command(name='projectremove', help='Removes a project.')
 @click.argument('name')
-def remove(name):
-	data.remove(name)
+def projectRemove(name):
+	data.projectRemove(name)
 
-@cli.command(name='set', help='<project name> <type: name/description> <new name/description>')
+@cli.command(name='set', help='<projectName> <type: name/description> <new name/description>')
 @click.argument('project')
 @click.argument('type')
 @click.argument('new')
@@ -31,3 +32,15 @@ def set(project, type, new):
 @click.argument('name')
 def show(name):
 	data.show(name)
+
+@cli.command(name='taskremove', help='<projectName> <taskID>')
+@click.argument('project')
+@click.argument('id')
+def taskRemove(project, id):
+	data.taskRemove(project, int(id))
+
+@cli.command(name='taskadd', help='<projectName> <taskName>')
+@click.argument('project')
+@click.argument('task')
+def taskAdd(project, task):
+	data.taskAdd(project, task)

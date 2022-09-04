@@ -37,57 +37,56 @@ def lst():
 	else:
 		click.echo(' - No projects found')
 
+def getProject(projectName):
+	data = load()
+	projects = data['projects']
+	indexOfProject = 0
+	success = False
+	for project in projects:
+		if project['name'] == projectName:
+			return indexOfProject
+		indexOfProject += 1
+	if not success:
+		return 'not found'
+
+
 def create(desc, name):
 	data = load()
 	projects = data['projects']
-	for project in projects:
-		if project['name'] == name:
-			click.echo('\n [FAILED] A project with the same name already exists.')
-			return
-	projects.append({"name": name, "description": desc, "tasks": []})
-	click.echo('\n [SUCCESS] Added project')
-	save(projects)
+	check = getProject(name)
+	if check == 'not found':
+		projects.append({"name": name, "description": desc, "tasks": []})
+		save(projects)
+		click.echo('\n [SUCCESS] Added project')
+	else:
+		click.echo('\n [FAILED] A project with the same name already exists.')
 
 def remove(name):
-	data = load()
-	projects = data['projects']
-	index = 0
-	success = False
-	for project in projects:
-		if project['name'] == name:
-			projects.pop(index)
-			success = True
-			save(projects)
-			click.echo('\n [SUCCESS] Removed project')
-		index += 1
-	if success:
-		pass
+	index = getProject(name)
+	if index != 'not found':
+		data = load()
+		data['projects'].pop(index)
+		save(data['projects'])
+		click.echo('\n [SUCCESS] Removed project')
 	else:
 		click.echo('\n [FAILED] Project not found')
 
 def set(project, type, new):
-	data = load()
-	projs = data['projects']
-	index = 0
-	success = False
-	for proj in projs:
-		if proj['name'] == project:
-			if type == 'desc':
-				projs[index]['description'] = new
-				save(projs)
-				success = True
-				click.echo('\n [SUCCESS] Updated')
-			elif type == 'name':
-				projs[index]['name'] = new
-				save(projs)
-				success = True
-				click.echo('\n [SUCCESS] Updated')
-			else:
-				click.echo('\n [FAILED] Type specified is unknown')
-				return
-		index += 1
-	if success:
-		pass
+	index = getProject(project)
+	if index != 'not found':
+		data = load()
+		if type == 'name':
+			data['projects'][index]['name'] = new
+			save(data['projects'])
+			click.echo('\n [SUCCESS] Updated project')
+		elif type == 'description':
+			data['projects'][index]['description'] = new
+			save(data['projects'])
+			click.echo('\n [SUCCESS] Updated project')
+		else:
+			click.echo('\n [FAILED] Type specified is unknown')
 	else:
 		click.echo('\n [FAILED] Project not found')
 
+def show(name):
+	pass

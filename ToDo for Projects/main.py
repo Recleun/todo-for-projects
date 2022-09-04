@@ -21,8 +21,8 @@ def remove(name):
 	data.remove(name)
 
 @cli.command(name='set', help='<project name> <type: name/description> <new name/description>')
-@click.argument('project name')
+@click.argument('project')
 @click.argument('type')
 @click.argument('new')
-def set(name, type, new):
-	data.set(name, type, new)
+def set(project, type, new):
+	data.set(project, type, new)

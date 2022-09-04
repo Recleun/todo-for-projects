@@ -6,8 +6,13 @@ filePath = './data/projects_data.json'
 def load():
 	try:
 		file = open(filePath, 'r+')
-		return json.load(file)
-	except:
+		try:
+			return json.load(file)
+		except json.decoder.JSONDecodeError as err:
+			click.echo('\n [ERROR] Failed to load data file. If you edited the file manually, check for extra commas (trailing commas) and delete them.')
+			quit()
+
+	except FileNotFoundError:
 		create = open(filePath, 'w+')
 
 		toWrite = {
@@ -89,4 +94,19 @@ def set(project, type, new):
 		click.echo('\n [FAILED] Project not found')
 
 def show(name):
-	pass
+	index = getProject(name)
+	if index != 'not found':
+		data = load()
+		projectName = data['projects'][index]['name']
+		projectDesc = data['projects'][index]['description']
+		projectTasks = data['projects'][index]['tasks']
+		click.echo(f'\nNAME: {projectName}')
+		click.echo(f'DESCRIPTION: {projectDesc}')
+		click.echo(f'TASKS ({len(projectTasks)}):')
+		if len(projectTasks) > 0:
+			for i in projectTasks:
+				click.echo(f' - {i}')
+		else:
+			click.echo(' - No tasks found')
+	else:
+		click.echo('\n [FAILED] Project not found')

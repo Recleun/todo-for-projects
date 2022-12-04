@@ -1,7 +1,10 @@
+import os
 import click
 import json
 
-filePath = './data/projects_data.json'
+p = os.path.abspath(__file__)
+path = p.split("main.py")
+filePath = f'{path[0]}/projects_data.json'
 
 def load():
 	try:

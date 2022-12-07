@@ -11,6 +11,7 @@ setup(
     entry_points={
         'console_scripts': [
             'pylister = main:cli',
+            'pyl = main:cli',
         ],
     },
 )

@@ -10,8 +10,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pylister = main:cli',
-            'pyl = main:cli',
+            'pylister = pylister:cli',
+            'pyl = pylister:cli',
         ],
     },
 )

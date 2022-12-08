@@ -1,6 +1,5 @@
 import click
 import data.main as data
-import utils.main as utils
 
 @click.group()
 def cli():

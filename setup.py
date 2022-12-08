@@ -4,8 +4,8 @@ setup(
     name='pylister',
     version='1.0.1',
     author='recleun',
-    description='A cli tool that helps in managing tasks for multiple projects.',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     include_package_data=True,
     keywords=[

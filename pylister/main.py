@@ -9,13 +9,13 @@ def cli():
 def lst():
 	data.lst()
 
-@cli.command(name='projectadd', help='Creates a new project.')
+@cli.command(name='addproject', help='Creates a new project.')
 @click.option('--desc', help='Description of the project.')
 @click.argument('name')
 def projectAdd(desc, name):
 	data.projectAdd(desc, name)
 
-@cli.command(name='projectremove', help='Removes a project.')
+@cli.command(name='removeproject', help='Removes a project.')
 @click.argument('name')
 def projectRemove(name):
 	data.projectRemove(name)
@@ -32,13 +32,13 @@ def set(project, type, new):
 def show(name):
 	data.show(name)
 
-@cli.command(name='taskremove', help='<projectName> <taskID>')
+@cli.command(name='removetask', help='<projectName> <taskID>')
 @click.argument('project')
 @click.argument('id')
 def taskRemove(project, id):
 	data.taskRemove(project, int(id))
 
-@cli.command(name='taskadd', help='<projectName> <taskName>')
+@cli.command(name='addtask', help='<projectName> <taskName>')
 @click.argument('project')
 @click.argument('task')
 def taskAdd(project, task):

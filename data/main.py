@@ -51,7 +51,7 @@ def getProject(projectName):
 	indexOfProject = 0
 	success = False
 	for project in projects:
-		if project['name'] == projectName:
+		if project['name'].lower() == projectName.lower():
 			return indexOfProject
 		indexOfProject += 1
 	if not success:
@@ -124,7 +124,6 @@ def taskAdd(project, task):
 		click.echo('\n [SUCCESS] Task added successfully')
 	else:
 		click.echo('\n [FAILED] Project not found')
-
 
 def taskRemove(project, id):
 	projectIndex = getProject(project)

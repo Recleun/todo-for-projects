@@ -69,7 +69,7 @@ pyl addp pylister --desc "This is a description"
 #### 1.4 Removing Projects
 
 ```
-pyproject rmproject <Project Name>
+pylister rmproject <Project Name>
 ```
 
 Example:
